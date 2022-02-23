@@ -1,6 +1,6 @@
 ## 5.2.4
 
-* Internal code cleanup for stricter analysis options.
+* Add doc for iOS auth with SERVER_CLIENT_ID
 
 ## 5.2.3
 
