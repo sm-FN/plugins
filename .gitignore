@@ -50,3 +50,10 @@ build/
 
 # Downloaded by the plugin tools.
 google-java-format-1.3-all-deps.jar
+*.md
+*.dart
+*.dart
+packages/plugin_platform_interface/test/plugin_platform_interface_test.dart
+*.md
+*.yaml
+packages/plugin_platform_interface/README.md

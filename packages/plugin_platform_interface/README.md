@@ -25,7 +25,7 @@ abstract class UrlLauncherPlatform extends PlatformInterface {
   /// Platform-specific plugins should set this with their own platform-specific
   /// class that extends [UrlLauncherPlatform] when they register themselves.
   static set instance(UrlLauncherPlatform instance) {
-    PlatformInterface.verify(instance, _token);
+    PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
 
@@ -35,15 +35,14 @@ abstract class UrlLauncherPlatform extends PlatformInterface {
 This guarantees that UrlLauncherPlatform.instance cannot be set to an object that `implements`
 UrlLauncherPlatform (it can only be set to an object that `extends` UrlLauncherPlatform).
 
-## Mocking or faking platform interfaces
+## Mocking platform interfaces with Mockito
 
 
-Test implementations of platform interfaces, such as those using `mockito`'s
-`Mock` or `test`'s `Fake`, will fail the verification done by `verify`.
-This package provides a `MockPlatformInterfaceMixin` which can be used in test
-code only to disable the `extends` enforcement.
+Mockito mocks of platform interfaces will fail the verification done by `verifyToken`.
+This package provides a `MockPlatformInterfaceMixin` which can be used in test code only to disable
+the `extends` enforcement.
 
-For example, a Mockito mock of a platform interface can be created with:
+A Mockito mock of a platform interface can be created with:
 
 ```dart
 class UrlLauncherPlatformMock extends Mock
