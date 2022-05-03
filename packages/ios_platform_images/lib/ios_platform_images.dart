@@ -8,7 +8,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart'
     show SynchronousFuture, describeIdentity, immutable, objectRuntimeType;
-import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
@@ -95,7 +94,7 @@ class _FutureMemoryImage extends ImageProvider<_FutureMemoryImage> {
 
   /// See [ImageProvider.hashCode].
   @override
-  int get hashCode => hashValues(_futureBytes.hashCode, _futureScale);
+  int get hashCode => Object.hash(_futureBytes.hashCode, _futureScale);
 
   /// See [ImageProvider.toString].
   @override

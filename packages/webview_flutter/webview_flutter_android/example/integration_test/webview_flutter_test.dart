@@ -14,7 +14,6 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:webview_flutter_android/webview_android.dart';
@@ -1373,6 +1372,50 @@ Future<void> main() async {
       expect(
         controller.runJavascriptReturningResult(
             'document.querySelector("p") && document.querySelector("p").textContent'),
+        completion('null'),
+      );
+    },
+  );
+
+  testWidgets(
+    'clearCache should clear local storage',
+    (WidgetTester tester) async {
+      final Completer<WebViewController> controllerCompleter =
+          Completer<WebViewController>();
+      final Completer<void> onPageFinished = Completer<void>();
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: WebView(
+            key: GlobalKey(),
+            initialUrl: primaryUrl,
+            javascriptMode: JavascriptMode.unrestricted,
+            onPageFinished: (_) => onPageFinished.complete(),
+            onWebViewCreated: (WebViewController controller) {
+              controllerCompleter.complete(controller);
+            },
+          ),
+        ),
+      );
+
+      final WebViewController controller = await controllerCompleter.future;
+      await onPageFinished.future;
+
+      await controller.runJavascript('localStorage.setItem("myCat", "Tom");');
+
+      expect(
+        controller.runJavascriptReturningResult(
+          'localStorage.getItem("myCat");',
+        ),
+        completion('"Tom"'),
+      );
+
+      await controller.clearCache();
+
+      expect(
+        controller.runJavascriptReturningResult(
+          'localStorage.getItem("myCat");',
+        ),
         completion('null'),
       );
     },

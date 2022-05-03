@@ -1,3 +1,8 @@
+## NEXT
+
+* Removes unnecessary imports.
+* Adds OS version support information to README.
+
 ## 2.0.9
 
 * Updates documentation on README.md.
